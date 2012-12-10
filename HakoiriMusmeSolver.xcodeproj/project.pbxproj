@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		875073A91676367A00146156 /* Solver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 875073A81676367A00146156 /* Solver.mm */; };
 		876A24AA1674D7C10058122C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 876A24A91674D7C10058122C /* QuartzCore.framework */; };
 		876A24AC1674D7C10058122C /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 876A24AB1674D7C10058122C /* OpenGLES.framework */; };
 		876A24AE1674D7C10058122C /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 876A24AD1674D7C10058122C /* OpenAL.framework */; };
@@ -131,11 +132,13 @@
 		876A262D1674D7C30058122C /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = 876A262C1674D7C30058122C /* vec4.c */; };
 		876A26321674D7C30058122C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 876A26311674D7C30058122C /* main.m */; };
 		876A26351674D7C30058122C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 876A26341674D7C30058122C /* AppDelegate.m */; };
-		876A26381674D7C30058122C /* HelloWorldLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 876A26371674D7C30058122C /* HelloWorldLayer.m */; };
+		876A26381674D7C30058122C /* HelloWorldLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 876A26371674D7C30058122C /* HelloWorldLayer.mm */; };
 		876A263B1674D7C30058122C /* IntroLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 876A263A1674D7C30058122C /* IntroLayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		875073A71676367A00146156 /* Solver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Solver.h; sourceTree = "<group>"; };
+		875073A81676367A00146156 /* Solver.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Solver.mm; sourceTree = "<group>"; };
 		876A24A51674D7C10058122C /* HakoiriMusmeSolver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HakoiriMusmeSolver.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		876A24A91674D7C10058122C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		876A24AB1674D7C10058122C /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -395,7 +398,7 @@
 		876A26331674D7C30058122C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		876A26341674D7C30058122C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		876A26361674D7C30058122C /* HelloWorldLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelloWorldLayer.h; sourceTree = "<group>"; };
-		876A26371674D7C30058122C /* HelloWorldLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloWorldLayer.m; sourceTree = "<group>"; };
+		876A26371674D7C30058122C /* HelloWorldLayer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = HelloWorldLayer.mm; sourceTree = "<group>"; };
 		876A26391674D7C30058122C /* IntroLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntroLayer.h; sourceTree = "<group>"; };
 		876A263A1674D7C30058122C /* IntroLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntroLayer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -456,10 +459,12 @@
 		876A24BB1674D7C10058122C /* HakoiriMusmeSolver */ = {
 			isa = PBXGroup;
 			children = (
+				875073A71676367A00146156 /* Solver.h */,
+				875073A81676367A00146156 /* Solver.mm */,
 				876A26331674D7C30058122C /* AppDelegate.h */,
 				876A26341674D7C30058122C /* AppDelegate.m */,
 				876A26361674D7C30058122C /* HelloWorldLayer.h */,
-				876A26371674D7C30058122C /* HelloWorldLayer.m */,
+				876A26371674D7C30058122C /* HelloWorldLayer.mm */,
 				876A26391674D7C30058122C /* IntroLayer.h */,
 				876A263A1674D7C30058122C /* IntroLayer.m */,
 				876A24BC1674D7C10058122C /* Resources */,
@@ -1007,8 +1012,9 @@
 				876A262D1674D7C30058122C /* vec4.c in Sources */,
 				876A26321674D7C30058122C /* main.m in Sources */,
 				876A26351674D7C30058122C /* AppDelegate.m in Sources */,
-				876A26381674D7C30058122C /* HelloWorldLayer.m in Sources */,
+				876A26381674D7C30058122C /* HelloWorldLayer.mm in Sources */,
 				876A263B1674D7C30058122C /* IntroLayer.m in Sources */,
+				875073A91676367A00146156 /* Solver.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1112,6 +1118,7 @@
 				876A26401674D7C30058122C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

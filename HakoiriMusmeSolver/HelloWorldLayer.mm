@@ -12,6 +12,7 @@
 
 // Needed to obtain the Navigation Controller
 #import "AppDelegate.h"
+#import "Solver.h"
 
 #pragma mark - HelloWorldLayer
 
@@ -101,6 +102,19 @@
 		[self addChild:menu];
 
 	}
+    int initialRooms[4][5] = {{CHICHI,CHICHI,JOCHU1,JOCHU1,0},
+        {MUSUME,MUSUME,BANTO,TEDAI,DECCHI2},
+        {MUSUME,MUSUME,BANTO,DECCHI1,DECCHI3},
+        {HAHA,HAHA,JOCHU2,JOCHU2,0}};
+    Position *pos = new Position;
+    for (int i=0; i<COLS; i++) {
+        for (int j=0; j<ROWS; j++) {
+            pos->rooms[i][j] = initialRooms[i][j];
+        }
+    }
+    Solver *solver = new Solver();
+    solver->startProblem(pos);
+
 	return self;
 }
 
