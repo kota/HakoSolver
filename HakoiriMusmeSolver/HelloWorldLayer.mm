@@ -106,10 +106,10 @@
         {MUSUME,MUSUME,BANTO,TEDAI,DECCHI2},
         {MUSUME,MUSUME,BANTO,DECCHI1,DECCHI3},
         {HAHA,HAHA,JOCHU2,JOCHU2,0}};
-    Position *pos = new Position;
+    Position pos;
     for (int i=0; i<COLS; i++) {
         for (int j=0; j<ROWS; j++) {
-            pos->rooms[i][j] = initialRooms[i][j];
+            pos.rooms[i][j] = initialRooms[i][j];
         }
     }
     Solver *solver = new Solver();

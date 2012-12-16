@@ -134,6 +134,7 @@
 		876A26351674D7C30058122C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 876A26341674D7C30058122C /* AppDelegate.m */; };
 		876A26381674D7C30058122C /* HelloWorldLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 876A26371674D7C30058122C /* HelloWorldLayer.mm */; };
 		876A263B1674D7C30058122C /* IntroLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 876A263A1674D7C30058122C /* IntroLayer.m */; };
+		8786825B167DCE1B00C835EC /* Position.mm in Sources */ = {isa = PBXBuildFile; fileRef = 87868259167DCE1B00C835EC /* Position.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -401,6 +402,8 @@
 		876A26371674D7C30058122C /* HelloWorldLayer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = HelloWorldLayer.mm; sourceTree = "<group>"; };
 		876A26391674D7C30058122C /* IntroLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntroLayer.h; sourceTree = "<group>"; };
 		876A263A1674D7C30058122C /* IntroLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntroLayer.m; sourceTree = "<group>"; };
+		87868259167DCE1B00C835EC /* Position.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Position.mm; sourceTree = "<group>"; };
+		8786825A167DCE1B00C835EC /* Position.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Position.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -470,6 +473,8 @@
 				876A24BC1674D7C10058122C /* Resources */,
 				876A24D61674D7C10058122C /* libs */,
 				876A262F1674D7C30058122C /* Supporting Files */,
+				87868259167DCE1B00C835EC /* Position.mm */,
+				8786825A167DCE1B00C835EC /* Position.h */,
 			);
 			path = HakoiriMusmeSolver;
 			sourceTree = "<group>";
@@ -1015,6 +1020,7 @@
 				876A26381674D7C30058122C /* HelloWorldLayer.mm in Sources */,
 				876A263B1674D7C30058122C /* IntroLayer.m in Sources */,
 				875073A91676367A00146156 /* Solver.mm in Sources */,
+				8786825B167DCE1B00C835EC /* Position.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
