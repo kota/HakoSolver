@@ -16,36 +16,38 @@ Solver::Solver(void){
 Solver::~Solver(void){
 }
 
-void Solver::startProblem(const Position &pos){
+void Solver::startProblem(Position *pos){
     Position *lastPosition = solve(pos);
     if(lastPosition){
         Position *pos = lastPosition;
+        int count = 0;
         while (true) {
+            count++;
             NSLog(@"%s",pos->getPositionString().c_str());
             pos = pos->parent;
             if(!pos){
+                NSLog(@"Solved with %d moves.",count);
                 return;
-                NSLog(@"finished");
             }
         }
     } else {
-        NSLog(@"NOT finished");
+        NSLog(@"Could not solved.");
     }
 }
 
-Position* Solver::solve(const Position &initialPosition){
+Position* Solver::solve(Position *initialPosition){
     _queue.push(initialPosition);
     while (!_queue.empty()) {
-        Position pos = _queue.front();
+        Position *pos = _queue.front();
         _queue.pop();
         
-        std::vector<Position> nextPositions = pos.getNextPositions();
+        std::vector<Position*> nextPositions = pos->getNextPositions();
         int numNextPositions = nextPositions.size();
         for(int i=0;i<numNextPositions;i++) {
-            Position next = nextPositions[i];
+            Position *next = nextPositions[i];
             if (!isPositionAlreadySearched(next)) {
-                if (next.isSolved()) {
-                    Position *nextPointer = next.copy();
+                if (next->isSolved()) {
+                    Position *nextPointer = next->copy();
                     return nextPointer;
                 }
                 _searchedPositions.push_back(next);
@@ -57,11 +59,11 @@ Position* Solver::solve(const Position &initialPosition){
     return NULL;
 }
 
-bool Solver::isPositionAlreadySearched(const Position &pos)
+bool Solver::isPositionAlreadySearched(Position* pos)
 {
-    std::vector<Position>::iterator it;
+    std::vector<Position*>::iterator it;
     for (it = _searchedPositions.begin();it != _searchedPositions.end();it++ ) {
-        if (pos.isIdenticalTo(*it)) {
+        if (pos->isIdenticalTo(*it)) {
             return true;
         }
     }

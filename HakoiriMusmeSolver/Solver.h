@@ -21,14 +21,14 @@ class Solver
 public:
     Solver();
     ~Solver();
-    void startProblem(const Position &pos);
-    Position* solve(const Position &pos);
+    void startProblem(Position *pos);
+    Position* solve(Position *pos);
 
 private:
-    std::queue<Position> _queue;
-    std::vector<Position> _searchedPositions;
+    std::queue<Position*> _queue;
+    std::vector<Position*> _searchedPositions;
     
-    bool isPositionAlreadySearched(const Position &pos);
+    bool isPositionAlreadySearched(Position* pos);
 };
 
 #endif /* defined(__HakoSolver__File__) */

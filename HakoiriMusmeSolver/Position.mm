@@ -14,9 +14,9 @@ Position::Position(void){
 Position::~Position(void){
 }
 
-std::vector<Position> Position::getNextPositions()
+std::vector<Position*> Position::getNextPositions()
 {
-    std::vector<Position> positions;
+    std::vector<Position*> positions;
     
     int emptyPositions[2][2];
     int emptyPostionIndex = 0;
@@ -43,7 +43,7 @@ std::vector<Position> Position::getNextPositions()
     return positions;
 }
 
-std::vector<Position> Position::getTransitionsWithOneEmptySpace(std::vector<Position> &positions, int x, int y)
+std::vector<Position*> Position::getTransitionsWithOneEmptySpace(std::vector<Position*> &positions, int x, int y)
 {
     //1x2 above
     pushPositionIfNotNull(movePieceByOne(x, y, 0, -1, 2, SIZE_1x2), positions) ;
@@ -106,7 +106,7 @@ void Position::assertValid()
     assert(numEmpty == 2);
 }
 
-std::vector<Position> Position::getTransitionsWithTwoEmptySpaces(std::vector<Position> &positions, int x1, int y1, int x2, int y2)
+std::vector<Position*> Position::getTransitionsWithTwoEmptySpaces(std::vector<Position*> &positions, int x1, int y1, int x2, int y2)
 {
     //縦横につながってなければ終了
     if (abs(x1-x2)+abs(y1-y2) != 1) {
@@ -169,10 +169,10 @@ Position* Position::moveMusume(int x1, int y1, int x2, int y2, int dx, int dy){
     return NULL;
 }
 
-void Position::pushPositionIfNotNull(Position *pos, std::vector<Position> &positions)
+void Position::pushPositionIfNotNull(Position *pos, std::vector<Position*> &positions)
 {
     if (pos != NULL) {
-        positions.push_back(*pos);
+        positions.push_back(pos);
     }
 }
 
@@ -181,11 +181,11 @@ bool Position::isSolved()
     return rooms[1][4] == MUSUME && rooms[2][4] == MUSUME;
 }
 
-bool Position::isIdenticalTo(const Position &pos) const
+bool Position::isIdenticalTo(Position *pos) const
 {
     for (int x=0; x<COLS; x++) {
         for (int y=0; y<ROWS; y++) {
-            if ((pos.rooms[x][y] & 7) != (rooms[x][y] & 7)) {
+            if ((pos->rooms[x][y] & 7) != (rooms[x][y] & 7)) {
                 return false;
             }
         }

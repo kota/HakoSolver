@@ -41,21 +41,21 @@ public:
     int rooms[COLS][ROWS];
     Position *parent;
     
-    std::vector<Position> getNextPositions();
+    std::vector<Position*> getNextPositions();
     std::string getPositionString();
     bool isSolved();
-    bool isIdenticalTo(const Position &pos) const;
+    bool isIdenticalTo(Position *pos) const;
     Position* copy();
     
 private:
-    std::vector<Position> getTransitionsWithOneEmptySpace(std::vector<Position> &positions, int x, int y);
-    std::vector<Position> getTransitionsWithTwoEmptySpaces(std::vector<Position> &positions, int x1, int y1, int x2, int y2);
+    std::vector<Position*> getTransitionsWithOneEmptySpace(std::vector<Position*> &positions, int x, int y);
+    std::vector<Position*> getTransitionsWithTwoEmptySpaces(std::vector<Position*> &positions, int x1, int y1, int x2, int y2);
     Position* movePieceByOne(int x, int y, int dx, int dy, int pieceLength, int sizeType);
     Position* movePieceByTwo(int x1, int y1, int x2, int y2, int dx, int dy, int sizeType);
     Position* moveMusume(int x1, int y1, int x2, int y2, int dx, int dy);
     void assertValid();
     char getHumanChar(int piece);
-    void pushPositionIfNotNull(Position *pos, std::vector<Position> &positions);
+    void pushPositionIfNotNull(Position *pos, std::vector<Position*> &positions);
 };
 
 #endif /* defined(__HakoiriMusmeSolver__Position__) */
