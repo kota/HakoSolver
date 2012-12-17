@@ -17,6 +17,9 @@ Solver::~Solver(void){
 }
 
 void Solver::startProblem(Position *pos){
+    Position::initializeZobristHashSeeds();
+    pos->generateHash();
+    
     Position *lastPosition = solve(pos);
     if(lastPosition){
         Position *pos = lastPosition;
@@ -63,7 +66,7 @@ bool Solver::isPositionAlreadySearched(Position* pos)
 {
     std::vector<Position*>::iterator it;
     for (it = _searchedPositions.begin();it != _searchedPositions.end();it++ ) {
-        if (pos->isIdenticalTo(*it)) {
+        if (pos->hash == (*it)->hash) {
             return true;
         }
     }

@@ -38,13 +38,18 @@ public:
     Position();
     ~Position();
     
+    static int zobristHashSeeds[COLS][ROWS][5];
+    static void initializeZobristHashSeeds();
+    
     int rooms[COLS][ROWS];
+    int hash;
     Position *parent;
     
+    void generateHash();
     std::vector<Position*> getNextPositions();
     std::string getPositionString();
     bool isSolved();
-    bool isIdenticalTo(Position *pos) const;
+    bool isIdenticalTo(const Position &pos) const;
     Position* copy();
     
 private:

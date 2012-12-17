@@ -14,6 +14,30 @@ Position::Position(void){
 Position::~Position(void){
 }
 
+int Position::zobristHashSeeds[COLS][ROWS][5];
+
+void Position::initializeZobristHashSeeds()
+{
+    for (int i=0; i<COLS; i++) {
+        for (int j=0; j<ROWS; j++) {
+            for (int k=0; k<5; k++) {
+                zobristHashSeeds[i][j][k] = rand();
+            }
+        }
+    }
+}
+
+void Position::generateHash()
+{
+    int newHash = 0;
+    for (int i=0; i<COLS; i++) {
+        for (int j=0; j<ROWS; j++) {
+            newHash ^= zobristHashSeeds[i][j][this->rooms[i][j] & 7];
+        }
+    }
+    this->hash = newHash;
+}
+
 std::vector<Position*> Position::getNextPositions()
 {
     std::vector<Position*> positions;
@@ -68,8 +92,14 @@ Position* Position::movePieceByOne(int x, int y, int dx, int dy, int pieceLength
         if((rooms[x+dx][y+dy] & 7) == sizeType){
             Position *newPos = copy();
             newPos->parent = this;
-            newPos->rooms[x][y] = rooms[x+(dx*pieceLength)][y+(dy*pieceLength)];
-            newPos->rooms[x+(dx*pieceLength)][y+(dy*pieceLength)] = EMPTY;
+            int destX = x+(dx*pieceLength);
+            int destY = y+(dy*pieceLength);
+            newPos->hash ^= zobristHashSeeds[x][y][newPos->rooms[x][y]&7];
+            newPos->hash ^= zobristHashSeeds[x][y][newPos->rooms[destX][destY]&7];
+            newPos->hash ^= zobristHashSeeds[destX][destY][newPos->rooms[destX][destY]&7];
+            newPos->hash ^= zobristHashSeeds[destX][destY][newPos->rooms[x][y]&7];
+            newPos->rooms[x][y] = rooms[destX][destY];
+            newPos->rooms[destX][destY] = EMPTY;
             assertValid();
             return newPos;
         }
@@ -79,10 +109,22 @@ Position* Position::movePieceByOne(int x, int y, int dx, int dy, int pieceLength
 
 Position* Position::movePieceByTwo(int x1, int y1, int x2, int y2, int dx, int dy, int sizeType)
 {
-    if(x1+dx >= 0 && x2+dx < COLS && y1+dy >= 0 && y1+dy < ROWS){
-        if ((rooms[x1+dx][y1+dy] & 7) == sizeType && (rooms[x1+dx][y1+dy] == rooms[x2+dx][y2+dy])) {
+    int destX1 = x1+dx;
+    int destY1 = y1+dy;
+    int destX2 = x2+dx;
+    int destY2 = y2+dy;
+    if(destX1 >= 0 && destX2 < COLS && destY1 >= 0 && destY2 < ROWS){ //destY1<ROWSって書いてあったけどバグ?
+        if ((rooms[destX1][destY1] & 7) == sizeType && (rooms[destX1][destY1] == rooms[destX2][destY2])) {
             Position *newPos = copy();
             newPos->parent = this;
+            newPos->hash ^= zobristHashSeeds[x1][y1][newPos->rooms[x1][y1]&7];
+            newPos->hash ^= zobristHashSeeds[x1][y1][newPos->rooms[destX1][destY1]&7];
+            newPos->hash ^= zobristHashSeeds[destX1][destY1][newPos->rooms[destX1][destY1]&7];
+            newPos->hash ^= zobristHashSeeds[destX1][destY1][newPos->rooms[x1][y1]&7];
+            newPos->hash ^= zobristHashSeeds[x2][y2][newPos->rooms[x2][y2]&7];
+            newPos->hash ^= zobristHashSeeds[x2][y2][newPos->rooms[destX2][destY2]&7];
+            newPos->hash ^= zobristHashSeeds[destX2][destY2][newPos->rooms[destX2][destY2]&7];
+            newPos->hash ^= zobristHashSeeds[destX2][destY2][newPos->rooms[x2][y2]&7];
             newPos->rooms[x1][y1] = newPos->rooms[x1+dx][y1+dy];
             newPos->rooms[x2][y2] = newPos->rooms[x2+dx][y2+dy];
             newPos->rooms[x1+dx][y1+dy] = EMPTY;
@@ -155,14 +197,28 @@ std::vector<Position*> Position::getTransitionsWithTwoEmptySpaces(std::vector<Po
 }
 
 Position* Position::moveMusume(int x1, int y1, int x2, int y2, int dx, int dy){
-    if(x1+(dx*2) < COLS && x1+(dx*2) >= 0 && y1+(dy*2) < ROWS && y1+(dy*2) >=0){
+    int destX1 = x1+(dx*2);
+    int destY1 = y1+(dy*2);
+    int destX2 = x2+(dx*2);
+    int destY2 = y2+(dy*2);
+    if(destX1 < COLS && destX1 >= 0 && destY1 < ROWS && destY1 >=0){
         if (rooms[x1+dx][y1+dy] == MUSUME && rooms[x2+dx][y2+dy] == MUSUME) {
             Position *newPos = copy();
             newPos->parent = this;
+            
+            newPos->hash ^= zobristHashSeeds[x1][y1][EMPTY];
+            newPos->hash ^= zobristHashSeeds[x1][y1][SIZE_4x4];
+            newPos->hash ^= zobristHashSeeds[x2][y2][EMPTY];
+            newPos->hash ^= zobristHashSeeds[x2][y2][SIZE_4x4];
+            newPos->hash ^= zobristHashSeeds[destX1][destY1][SIZE_4x4];
+            newPos->hash ^= zobristHashSeeds[destX1][destY1][EMPTY];
+            newPos->hash ^= zobristHashSeeds[destX2][destY2][SIZE_4x4];
+            newPos->hash ^= zobristHashSeeds[destX2][destY2][EMPTY];
+            
             newPos->rooms[x1][y1] = MUSUME;
             newPos->rooms[x2][y2] = MUSUME;
-            newPos->rooms[x1+(dx*2)][y1+(dy*2)] = EMPTY;
-            newPos->rooms[x2+(dx*2)][y2+(dy*2)] = EMPTY;
+            newPos->rooms[destX1][destY1] = EMPTY;
+            newPos->rooms[destX2][destY2] = EMPTY;
             return newPos;
         }
     }
@@ -181,22 +237,24 @@ bool Position::isSolved()
     return rooms[1][4] == MUSUME && rooms[2][4] == MUSUME;
 }
 
-bool Position::isIdenticalTo(Position *pos) const
+bool Position::isIdenticalTo(const Position &pos) const
 {
-    for (int x=0; x<COLS; x++) {
-        for (int y=0; y<ROWS; y++) {
-            if ((pos->rooms[x][y] & 7) != (rooms[x][y] & 7)) {
-                return false;
-            }
-        }
-    }
-    return true;
+//    for (int x=0; x<COLS; x++) {
+//        for (int y=0; y<ROWS; y++) {
+//            if ((pos.rooms[x][y] & 7) != (rooms[x][y] & 7)) {
+//                return false;
+//            }
+//        }
+//    }
+//    return true;
+    return this->hash == pos.hash;
 }
 
 Position* Position::copy()
 {
     Position *newPos = new Position();
     newPos->parent = parent;
+    newPos->hash = hash;
      for (int i=0; i<COLS; i++) {
         for (int j=0; j<ROWS; j++) {
             newPos->rooms[i][j] = rooms[i][j];
