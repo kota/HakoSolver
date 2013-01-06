@@ -239,14 +239,6 @@ bool Position::isSolved()
 
 bool Position::isIdenticalTo(const Position &pos) const
 {
-//    for (int x=0; x<COLS; x++) {
-//        for (int y=0; y<ROWS; y++) {
-//            if ((pos.rooms[x][y] & 7) != (rooms[x][y] & 7)) {
-//                return false;
-//            }
-//        }
-//    }
-//    return true;
     return this->hash == pos.hash;
 }
 

@@ -45,13 +45,12 @@ Position* Solver::solve(Position *initialPosition){
         _queue.pop();
         
         std::vector<Position*> nextPositions = pos->getNextPositions();
-        int numNextPositions = nextPositions.size();
-        for(int i=0;i<numNextPositions;i++) {
-            Position *next = nextPositions[i];
+        std::vector<Position*>::iterator it;
+        for (it = nextPositions.begin();it != nextPositions.end();it++ ) {
+            Position *next = *it;
             if (!isPositionAlreadySearched(next)) {
                 if (next->isSolved()) {
-                    Position *nextPointer = next->copy();
-                    return nextPointer;
+                    return next;
                 }
                 _searchedPositions.push_back(next);
                 _queue.push(next);
